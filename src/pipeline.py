@@ -71,14 +71,29 @@ Rewritten Query:"""
         "mock": False,
     }
 
-  def run_completion(self, prompt: str) -> str:
+  def run_completion(self, prompt: str, context: list[str] | None = None) -> str:
     if not self.client:
       return "Groq API key not configured."
+
+    context_block = (
+        "\n".join([f"- {item}" for item in context])
+        if context
+        else "No relevant context found."
+    )
+
+    full_prompt = f"""Use the following known facts about the user to answer their question.
+If the answer isn't in the facts below, say you don't know rather than guessing.
+
+Known facts:
+{context_block}
+
+Question:
+{prompt}"""
 
     try:
       resp = self.client.chat.completions.create(
           model=settings.model_name,
-          messages=[{"role": "user", "content": prompt}],
+          messages=[{"role": "user", "content": full_prompt}],
           temperature=0.3,
       )
       return resp.choices[0].message.content.strip()

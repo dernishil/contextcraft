@@ -45,7 +45,9 @@ def handle_chat(req: ExecuteRequest):
     raise HTTPException(status_code=400, detail="Text field cannot be empty.")
 
   resolved_data = resolver.expand_query(req.text, req.history)
-  reply = resolver.run_completion(resolved_data["resolved"])
+  reply = resolver.run_completion(
+      resolved_data["resolved"], resolved_data["context_used"]
+  )
 
   store.insert(
       f"Q: {req.text} | Intent: {resolved_data['resolved']}",
