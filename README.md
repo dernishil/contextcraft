@@ -30,6 +30,7 @@ This keeps prompts smaller and more targeted as conversations scale, rather than
 | LLM Provider | Groq |
 | Frontend | Streamlit |
 | Config | Pydantic Settings |
+| Data Analysis | pandas, numpy, matplotlib |
 
 ## Requirements
 
@@ -74,6 +75,16 @@ streamlit run dashboard.py
 ```
 
 7. Open the dashboard at `http://localhost:8501`
+
+## Memory Analysis
+
+The dashboard includes a "Memory Analysis" section that pulls all stored memory entries and analyzes them using pandas and numpy — showing total entry count, average entry length, a breakdown of entries by source (manual vs. auto-saved chat logs), and a distribution histogram rendered with matplotlib.
+
+This same analysis can also be run standalone from the command line:
+```bash
+python analyze_memory.py
+```
+This prints summary statistics to the terminal and saves a chart as `memory_analysis.png`.
 
 ## API Endpoints
 
