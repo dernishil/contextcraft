@@ -8,3 +8,4 @@ pydantic
 pydantic-settings
 requests
 python-dotenv
+matplotlib

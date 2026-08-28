@@ -1,6 +1,9 @@
 import os
 import requests
 import streamlit as st
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="ContextCraft", layout="wide")
 
@@ -76,3 +79,43 @@ for item in reversed(st.session_state.logs):
     st.write(item["raw"])
   with st.chat_message("assistant"):
     st.write(item["response"])
+
+st.divider()
+st.markdown("#### Memory Analysis")
+
+if st.button("Analyze Memory"):
+  try:
+    data = requests.get(f"{API_BASE}/api/v1/memory").json()
+    records = data.get("data", [])
+
+    if not records:
+      st.warning("No memory entries found yet. Save some first.")
+    else:
+      df = pd.DataFrame(records)
+      df["source"] = df["metadata"].apply(
+          lambda m: m.get("source", "unknown") if isinstance(m, dict) else "unknown"
+      )
+      df["text_length"] = df["text"].apply(len)
+
+      col1, col2 = st.columns(2)
+      with col1:
+        st.metric("Total Entries", len(df))
+      with col2:
+        lengths = df["text_length"].to_numpy()
+        st.metric("Avg. Length (chars)", f"{np.mean(lengths):.1f}")
+
+      st.markdown("**Entries by source:**")
+      st.bar_chart(df["source"].value_counts())
+
+      fig, ax = plt.subplots()
+      ax.hist(df["text_length"], bins=10, color="#55A868", edgecolor="black")
+      ax.set_title("Distribution of Memory Entry Lengths")
+      ax.set_xlabel("Text length (characters)")
+      ax.set_ylabel("Frequency")
+      st.pyplot(fig)
+
+      st.markdown("**Raw data:**")
+      st.dataframe(df[["text", "source", "text_length"]])
+
+  except Exception as err:
+    st.error(f"Could not fetch memory data: {err}")
