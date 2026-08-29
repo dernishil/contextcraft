@@ -20,6 +20,32 @@ ContextCraft sits between the user and the LLM as a middleware layer:
 
 This keeps prompts smaller and more targeted as conversations scale, rather than growing linearly with every turn.
 
+## Measured Token Savings
+
+To validate the core claim — that this actually reduces token usage — the backend logs real, measured token counts (not estimates) for every chat turn:
+
+- **ContextCraft tokens:** the actual `total_tokens` reported by the Groq API for each request
+- **Naive-equivalent tokens:** the exact token count (via `tiktoken`, a real tokenizer) of what a "resend the full conversation history every turn" approach would have cost for that same turn, using the same generated answer length for a fair comparison
+
+Over a real 80-turn conversation:
+
+![Token usage comparison](token_savings_live.png)
+
+| Metric | Value |
+|---|---|
+| Turns | 80 |
+| Total ContextCraft tokens | 63,072 |
+| Total naive-equivalent tokens | 160,366 |
+| **Overall savings** | **60.7%** |
+
+**Key finding:** ContextCraft has a higher *fixed* cost per turn early on, due to a more thorough prompt (context grounding, hallucination prevention, structured output). However, because retrieval always pulls back a constant number of relevant facts (`top_k`) regardless of how long the conversation has been running, its per-turn cost stays roughly flat. The naive approach's cost grows continuously as history accumulates. In this test, naive's per-turn cost overtook ContextCraft's around turn 30-35 — after that point, the savings compound, and the gap was still widening at turn 80.
+
+This can be reproduced with:
+```bash
+python token_savings_live.py
+```
+which reads the automatically-logged `token_log.jsonl` and generates the chart above.
+
 ## Tech Stack
 
 | Layer | Technology |
@@ -130,10 +156,25 @@ Building and testing this project surfaced several real issues, each diagnosed a
 **Cause:** The instruction to avoid guessing was strict enough to also block valid, low-risk inference.
 **Fix:** Adjusted the prompt to explicitly allow combining multiple retrieved facts to infer an answer, while still requiring an honest "I don't know" when the answer truly isn't supported by memory. This is an ongoing balance rather than a fully solved problem — see Future Work.
 
+### 6. Two LLM calls per turn inflated token cost
+**Problem:** Early real token measurements showed ContextCraft costing *more* tokens per turn than the naive approach, contradicting the project's core goal.
+**Cause:** The pipeline made two separate LLM calls per chat turn — one to resolve the query, one to answer it — each paying its own system-prompt overhead and completion cost.
+**Fix:** Merged both steps into a single LLM call (`resolve_and_answer`) that returns structured JSON containing both the resolved query and the answer, cutting the redundant call overhead. This produced the first real, measured savings (see "Measured Token Savings" above).
+
+### 7. Hallucination guard over-restricted general knowledge
+**Problem:** After the single-call fix, the assistant stopped answering general questions it clearly should know (e.g. "tell me a joke"), responding "I don't have that" instead.
+**Cause:** The instruction to "answer using ONLY the known facts" was applied globally, blocking the model's own general knowledge/reasoning even for questions unrelated to the user's personal data.
+**Fix:** Scoped the grounding requirement specifically to personal-fact questions, while explicitly allowing normal general-knowledge answers (jokes, explanations, trivia) to use the model's own knowledge freely.
+
+## Known Limitations
+
+- **Third-person self-reference:** Asking about the user by name in the third person (e.g. "What is Nishil's favorite food?") can sometimes fail to resolve to the user's own stored facts, even though first-person phrasing ("what is my favorite food?") works correctly. The system is cautious about conflating a named entity with the current speaker, which occasionally backfires on otherwise-valid self-references.
+- **General knowledge about current/changing facts:** Questions about live or frequently-changing information (e.g. "who is currently the best player on my favorite team") can still be answered inaccurately. This is a limitation of the underlying LLM's training data, not of ContextCraft's retrieval system — the project's context-grounding only applies to personal/contextual facts, not general world knowledge.
+
 ## Future Work
 
 - Further tune the precision/recall balance between hallucination-avoidance and reasonable multi-fact inference
+- Improve third-person self-reference resolution
 - Configurable memory decay / expiry for older, less relevant entries
 - Support for additional LLM providers
-- Token usage metrics/dashboard to quantify savings vs. naive full-history approaches
 - Automated tests for the retrieval and resolution pipeline
