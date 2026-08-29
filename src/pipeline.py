@@ -13,7 +13,14 @@ class PromptResolver:
     self.client = Groq(api_key=settings.api_key) if settings.api_key else None
 
   def expand_query(self, raw_input: str, history: list[str]) -> dict:
-    retrieved = self.store.query(raw_input, k=settings.top_k)
+    manual_facts = self.store.query(
+      raw_input, k=settings.top_k, where={"source": "manual"}
+    )
+    chat_logs = self.store.query(
+        raw_input, k=settings.top_k, where={"source": "chat_log"}
+    )
+    retrieved = manual_facts + [c for c in chat_logs if c not in manual_facts]
+    retrieved = retrieved[: settings.top_k]
 
     mem_section = (
         "\n".join([f"- {item}" for item in retrieved])
@@ -82,7 +89,8 @@ Rewritten Query:"""
     )
 
     full_prompt = f"""Use the following known facts about the user to answer their question.
-If the answer isn't in the facts below, say you don't know rather than guessing.
+You may combine multiple facts below to reasonably infer an answer.
+If the answer truly cannot be inferred from these facts, say you don't know rather than guessing.
 
 Known facts:
 {context_block}

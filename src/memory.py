@@ -26,15 +26,16 @@ class VectorStore:
     logger.info("Saved record %s", doc_id)
     return doc_id
 
-  def query(self, text: str, k: int = 3) -> list[str]:
+  def query(self, text: str, k: int = 3, where: dict | None = None) -> list[str]:
     count = self.collection.count()
     if count == 0:
       return []
 
-    res = self.collection.query(
-        query_texts=[text],
-        n_results=min(k, count),
-    )
+    query_kwargs = {"query_texts": [text], "n_results": min(k, count)}
+    if where:
+      query_kwargs["where"] = where
+
+    res = self.collection.query(**query_kwargs)
     return res["documents"][0] if res and res.get("documents") else []
 
   def fetch_all(self) -> list[dict]:
