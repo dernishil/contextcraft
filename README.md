@@ -101,8 +101,38 @@ This prints summary statistics to the terminal and saves a chart as `memory_anal
 
 This is an early-stage prototype built to explore token-efficient context management for LLM applications. Built with AI-assisted development and debugged/deployed independently.
 
+## Debugging Journey — Problems Found & Fixed
+
+Building and testing this project surfaced several real issues, each diagnosed and fixed through hands-on debugging:
+
+### 1. API key not loading from `.env`
+**Problem:** The app always reported "Groq API key not configured," even with a valid key set.
+**Cause:** `config.py` read `os.getenv("GROQ_API_KEY", "")` directly at class-definition time, before `.env` had been loaded — so it always resolved to an empty string.
+**Fix:** Switched to Pydantic's `Field(validation_alias="GROQ_API_KEY")`, letting `pydantic-settings` load the value correctly from `.env` at startup.
+
+### 2. Model not found (404 from Groq)
+**Problem:** Completion requests failed with `model_not_found`.
+**Cause:** The configured model, `llama-3.1-8b-instant`, had moved to Groq's Enterprise tier and was no longer available on a free account.
+**Fix:** Switched `MODEL_NAME` to `openai/gpt-oss-20b`, a model available on free accounts.
+
+### 3. Retrieved context never reached the answer step
+**Problem:** The AI would hallucinate answers (e.g. inventing a project name) instead of using facts that were clearly present in memory.
+**Cause:** `expand_query()` correctly retrieved relevant memory, but that context was only used to rewrite the *question* — it was never passed into `run_completion()`, which generates the final *answer*. The answer step had no facts to draw from and was guessing.
+**Fix:** `run_completion()` now accepts the retrieved context directly and includes it explicitly in the prompt, with an instruction to answer only from the given facts and say "I don't know" if the answer isn't present.
+
+### 4. Retrieval crowded out by repeated questions
+**Problem:** After asking the same question multiple times, memory search started returning near-duplicate copies of the *question itself* instead of the actual relevant fact.
+**Cause:** Every chat exchange (even failed ones) is saved back into memory as `Q: ... | Intent: ...`. A repeated question is highly similar to its own past copies, so those copies out-ranked the real fact in the top-k semantic search results.
+**Fix:** Memory retrieval now queries manually-saved facts and chat-log entries separately, prioritizing manual facts, so a genuine stored fact can no longer be crowded out by repeated question logs.
+
+### 5. Precision vs. recall trade-off in answering
+**Problem:** After fixing the hallucination issue, the model became overly cautious — refusing to answer questions that required combining two known facts (e.g. inferring a project's language from a stated favorite language), even though the inference was reasonable.
+**Cause:** The instruction to avoid guessing was strict enough to also block valid, low-risk inference.
+**Fix:** Adjusted the prompt to explicitly allow combining multiple retrieved facts to infer an answer, while still requiring an honest "I don't know" when the answer truly isn't supported by memory. This is an ongoing balance rather than a fully solved problem — see Future Work.
+
 ## Future Work
 
+- Further tune the precision/recall balance between hallucination-avoidance and reasonable multi-fact inference
 - Configurable memory decay / expiry for older, less relevant entries
 - Support for additional LLM providers
 - Token usage metrics/dashboard to quantify savings vs. naive full-history approaches
