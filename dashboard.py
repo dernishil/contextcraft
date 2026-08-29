@@ -58,6 +58,7 @@ if submit and user_query.strip():
   try:
     res = requests.post(f"{API_BASE}/api/v1/chat", json=payload).json()
     st.session_state.history.append(f"User: {user_query}")
+    st.session_state.history.append(f"Assistant: {res.get('response', '')}")
     st.session_state.logs.append(res)
   except Exception as err:
     st.error(f"Request failed: {err}")

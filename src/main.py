@@ -1,4 +1,9 @@
+import json
 import logging
+import time
+from pathlib import Path
+
+import tiktoken
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from src.config import settings
@@ -10,6 +15,12 @@ logging.basicConfig(level=logging.INFO)
 app = FastAPI(title="ContextCraft Service")
 store = VectorStore(settings.db_path)
 resolver = PromptResolver(store)
+
+# Real tokenizer, same family used by modern OpenAI-compatible models.
+# Used only to MEASURE what the naive full-history approach would have
+# cost -- we don't actually make that wasteful API call, we just count.
+encoder = tiktoken.get_encoding("cl100k_base")
+TOKEN_LOG_PATH = Path("token_log.jsonl")
 
 
 class ResolveRequest(BaseModel):
@@ -44,22 +55,64 @@ def handle_chat(req: ExecuteRequest):
   if not req.text.strip():
     raise HTTPException(status_code=400, detail="Text field cannot be empty.")
 
-  resolved_data = resolver.expand_query(req.text, req.history)
-  reply = resolver.run_completion(
-      resolved_data["resolved"], resolved_data["context_used"]
+  result = resolver.resolve_and_answer(req.text, req.history)
+  contextcraft_tokens = result["tokens_used"]
+
+  # Naive-equivalent: how many tokens a single-call, "resend the full
+  # history every turn" approach would have cost THIS turn. We include
+  # a comparable system prompt and REUSE the actual answer length as the
+  # completion cost, since a naive approach still has to generate an
+  # answer of roughly the same size -- this keeps the comparison fair
+  # (same output, different amount of input context).
+  naive_system_prompt = (
+      "You are a helpful assistant. Use the full conversation history "
+      "below to answer the user's latest question."
   )
+  full_history_text = "\n".join(req.history + [req.text])
+  naive_input_tokens = len(
+      encoder.encode(naive_system_prompt + "\n" + full_history_text)
+  )
+  naive_completion_tokens = len(encoder.encode(result["response"]))
+  naive_tokens = naive_input_tokens + naive_completion_tokens
+
+  log_entry = {
+      "timestamp": time.time(),
+      "turn": len(req.history) + 1,
+      "query": req.text,
+      "contextcraft_tokens": contextcraft_tokens,
+      "naive_tokens": naive_tokens,
+  }
+  with TOKEN_LOG_PATH.open("a") as f:
+    f.write(json.dumps(log_entry) + "\n")
 
   store.insert(
-      f"Q: {req.text} | Intent: {resolved_data['resolved']}",
+      f"Q: {req.text} | Intent: {result['resolved']}",
       metadata={"source": "chat_log"},
   )
 
   return {
       "raw": req.text,
-      "resolved": resolved_data["resolved"],
-      "context": resolved_data["context_used"],
-      "response": reply,
+      "resolved": result["resolved"],
+      "context": result["context_used"],
+      "response": result["response"],
+      "contextcraft_tokens": contextcraft_tokens,
+      "naive_tokens": naive_tokens,
   }
+
+
+@app.get("/api/v1/token-stats")
+def get_token_stats():
+  """Returns the logged per-turn token comparison, for the dashboard
+  and analysis scripts to visualize."""
+  if not TOKEN_LOG_PATH.exists():
+    return {"data": []}
+
+  entries = []
+  with TOKEN_LOG_PATH.open() as f:
+    for line in f:
+      if line.strip():
+        entries.append(json.loads(line))
+  return {"data": entries}
 
 
 @app.post("/api/v1/memory")

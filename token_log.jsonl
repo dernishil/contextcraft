@@ -1,0 +1,80 @@
+{"timestamp": 1787999866.7104945, "turn": 1, "query": "What is Nishil's name?", "contextcraft_tokens": 744, "naive_tokens": 31}
+{"timestamp": 1787999880.6392386, "turn": 3, "query": "Which year of his course is Nishil currently in?", "contextcraft_tokens": 707, "naive_tokens": 64}
+{"timestamp": 1787999894.1468995, "turn": 5, "query": "What is Nishil studying?", "contextcraft_tokens": 659, "naive_tokens": 91}
+{"timestamp": 1787999907.9824378, "turn": 7, "query": "What type of course is Nishil pursuing?", "contextcraft_tokens": 810, "naive_tokens": 124}
+{"timestamp": 1787999922.8223782, "turn": 9, "query": "What is the name of Nishil's project?", "contextcraft_tokens": 759, "naive_tokens": 146}
+{"timestamp": 1787999930.6046615, "turn": 11, "query": "What is the name of Nishil's project?", "contextcraft_tokens": 631, "naive_tokens": 168}
+{"timestamp": 1787999946.782711, "turn": 13, "query": "What event is Nishil building Contextcraft for?", "contextcraft_tokens": 692, "naive_tokens": 190}
+{"timestamp": 1787999966.6488788, "turn": 15, "query": "What are Nishil's two favorite types of food", "contextcraft_tokens": 644, "naive_tokens": 212}
+{"timestamp": 1788002292.954086, "turn": 17, "query": "what is my name", "contextcraft_tokens": 592, "naive_tokens": 228}
+{"timestamp": 1788002301.959051, "turn": 19, "query": "what is my favorite food", "contextcraft_tokens": 698, "naive_tokens": 246}
+{"timestamp": 1788002314.8786688, "turn": 21, "query": "what is the name of my project", "contextcraft_tokens": 542, "naive_tokens": 262}
+{"timestamp": 1788002337.6087778, "turn": 23, "query": "what event I am building contextcraft for?", "contextcraft_tokens": 594, "naive_tokens": 279}
+{"timestamp": 1788002352.4339879, "turn": 25, "query": "What is the capital of australia?", "contextcraft_tokens": 540, "naive_tokens": 293}
+{"timestamp": 1788013309.8109658, "turn": 27, "query": "why does ice float on water?", "contextcraft_tokens": 606, "naive_tokens": 420}
+{"timestamp": 1788013366.5997937, "turn": 29, "query": "what is time complexity of binary search", "contextcraft_tokens": 696, "naive_tokens": 468}
+{"timestamp": 1788013416.0074906, "turn": 31, "query": "who wrote 1984", "contextcraft_tokens": 653, "naive_tokens": 480}
+{"timestamp": 1788013436.5791488, "turn": 33, "query": "what is largest planet in the solar system", "contextcraft_tokens": 561, "naive_tokens": 504}
+{"timestamp": 1788013459.1064434, "turn": 35, "query": "what is difference between ram and rom", "contextcraft_tokens": 638, "naive_tokens": 617}
+{"timestamp": 1788013931.9794903, "turn": 37, "query": "What is my mobile number", "contextcraft_tokens": 699, "naive_tokens": 634}
+{"timestamp": 1788013944.4704163, "turn": 39, "query": "What is the name of my college", "contextcraft_tokens": 746, "naive_tokens": 653}
+{"timestamp": 1788013955.940114, "turn": 41, "query": "What is my age", "contextcraft_tokens": 599, "naive_tokens": 669}
+{"timestamp": 1788013978.87656, "turn": 43, "query": "what is photosynthesis", "contextcraft_tokens": 601, "naive_tokens": 761}
+{"timestamp": 1788014225.887629, "turn": 45, "query": "what is my father's name", "contextcraft_tokens": 680, "naive_tokens": 779}
+{"timestamp": 1788014489.844966, "turn": 47, "query": "What does cpu stand for", "contextcraft_tokens": 590, "naive_tokens": 812}
+{"timestamp": 1788014500.569556, "turn": 49, "query": "What  cpu is my pc using", "contextcraft_tokens": 767, "naive_tokens": 903}
+{"timestamp": 1788014525.882127, "turn": 51, "query": "If a train travels at 60 km/h for 3 hours, how far does it travel?", "contextcraft_tokens": 701, "naive_tokens": 947}
+{"timestamp": 1788014585.0850723, "turn": 53, "query": "what is the purpose of an operating system", "contextcraft_tokens": 825, "naive_tokens": 1185}
+{"timestamp": 1788014967.7347426, "turn": 55, "query": "What programming language is commonly used for developing Android applications?", "contextcraft_tokens": 1001, "naive_tokens": 1253}
+{"timestamp": 1788014988.085695, "turn": 57, "query": "what is my favorite language?", "contextcraft_tokens": 804, "naive_tokens": 1270}
+{"timestamp": 1788015022.6736329, "turn": 59, "query": "What would happen if the Earth's gravity suddenly became half as strong?", "contextcraft_tokens": 950, "naive_tokens": 1650}
+{"timestamp": 1788015041.7588692, "turn": 61, "query": "who is my favorite superhero", "contextcraft_tokens": 876, "naive_tokens": 1666}
+{"timestamp": 1788015058.5958533, "turn": 63, "query": "why I don't like spiderman", "contextcraft_tokens": 1735, "naive_tokens": 1732}
+{"timestamp": 1788015108.8178706, "turn": 65, "query": "what do I feel about  iron man", "contextcraft_tokens": 824, "naive_tokens": 1759}
+{"timestamp": 1788015313.1838324, "turn": 67, "query": "what do I feel about  christopher nolan movies", "contextcraft_tokens": 594, "naive_tokens": 1781}
+{"timestamp": 1788015331.180206, "turn": 69, "query": "what do I feel about  the movie tenet", "contextcraft_tokens": 665, "naive_tokens": 1803}
+{"timestamp": 1788015347.5986252, "turn": 71, "query": "what do I feel about  the movie  top gun", "contextcraft_tokens": 750, "naive_tokens": 1831}
+{"timestamp": 1788015466.4590034, "turn": 73, "query": "If I changes my favorite programming language tomorrow, what is my current favorite language", "contextcraft_tokens": 615, "naive_tokens": 1852}
+{"timestamp": 1788015692.707434, "turn": 75, "query": "is contextcraft my course name or project name", "contextcraft_tokens": 894, "naive_tokens": 1891}
+{"timestamp": 1788015717.141561, "turn": 77, "query": "if you have 15 apples and give away 7, how many do you have left?", "contextcraft_tokens": 576, "naive_tokens": 1916}
+{"timestamp": 1788015747.173107, "turn": 79, "query": "why is the sky blue during the day", "contextcraft_tokens": 600, "naive_tokens": 2003}
+{"timestamp": 1788015797.606557, "turn": 81, "query": "What is the chemical formula for water?", "contextcraft_tokens": 578, "naive_tokens": 2019}
+{"timestamp": 1788015820.6436431, "turn": 83, "query": "What is my mother's name?", "contextcraft_tokens": 782, "naive_tokens": 2038}
+{"timestamp": 1788015832.0000966, "turn": 85, "query": "What is my father's name?", "contextcraft_tokens": 623, "naive_tokens": 2056}
+{"timestamp": 1788015845.4495103, "turn": 87, "query": "Where do I live?", "contextcraft_tokens": 619, "naive_tokens": 2072}
+{"timestamp": 1788015940.3346722, "turn": 89, "query": "why do humans need oxygen?", "contextcraft_tokens": 603, "naive_tokens": 2167}
+{"timestamp": 1788015982.1287813, "turn": 91, "query": "In what language do i usually make my projects in", "contextcraft_tokens": 659, "naive_tokens": 2182}
+{"timestamp": 1788016015.1818395, "turn": 93, "query": "what superhero's comic should I buy", "contextcraft_tokens": 1454, "naive_tokens": 2358}
+{"timestamp": 1788016266.218116, "turn": 95, "query": "At what time do I wake up", "contextcraft_tokens": 857, "naive_tokens": 2377}
+{"timestamp": 1788016337.5888407, "turn": 97, "query": "If all programmers who know Python know C++, and I know Python, can we conclude that I know C++?", "contextcraft_tokens": 923, "naive_tokens": 2444}
+{"timestamp": 1788016371.2715085, "turn": 99, "query": "A box contains 10 red balls and 10 blue balls. How many balls must you remove to guarantee getting two balls of the same color?", "contextcraft_tokens": 790, "naive_tokens": 2519}
+{"timestamp": 1788016414.127261, "turn": 101, "query": "Which football league do I watch on TV?", "contextcraft_tokens": 700, "naive_tokens": 2557}
+{"timestamp": 1788016434.8145719, "turn": 103, "query": "Which  football team I dislike", "contextcraft_tokens": 707, "naive_tokens": 2581}
+{"timestamp": 1788016442.8549912, "turn": 105, "query": "Which  football team I like", "contextcraft_tokens": 624, "naive_tokens": 2597}
+{"timestamp": 1788016455.4308941, "turn": 107, "query": "Which  football team I am likely to dislike", "contextcraft_tokens": 833, "naive_tokens": 2652}
+{"timestamp": 1788016499.762385, "turn": 109, "query": "f 5 machines make 5 products in 5 minutes, how long would 100 machines take to make 100 products, assuming the same rate?", "contextcraft_tokens": 818, "naive_tokens": 2690}
+{"timestamp": 1788016527.0983412, "turn": 111, "query": "Which is heavier: 1 kg of iron or 1 kg of feathers?", "contextcraft_tokens": 639, "naive_tokens": 2747}
+{"timestamp": 1788016546.242515, "turn": 113, "query": "Which footballer is likely to be my favorite?", "contextcraft_tokens": 1058, "naive_tokens": 2780}
+{"timestamp": 1788016575.3459337, "turn": 115, "query": "Would I like pasta", "contextcraft_tokens": 789, "naive_tokens": 2829}
+{"timestamp": 1788016591.1390514, "turn": 117, "query": "A bat and ball together cost \u20b9110. The bat costs \u20b9100 more than the ball. How much does the ball cost?", "contextcraft_tokens": 852, "naive_tokens": 2931}
+{"timestamp": 1788016622.1362154, "turn": 119, "query": "If a plane crashes exactly on the border between India and Nepal, where should the survivors be buried?", "contextcraft_tokens": 770, "naive_tokens": 2967}
+{"timestamp": 1788016647.987222, "turn": 121, "query": "If you have a sequence 2, 6, 12, 20, 30, what is the next number?", "contextcraft_tokens": 810, "naive_tokens": 2998}
+{"timestamp": 1788016665.5771284, "turn": 123, "query": "What is my weight", "contextcraft_tokens": 711, "naive_tokens": 3019}
+{"timestamp": 1788016692.0739703, "turn": 125, "query": "Which execrices should I do to reduce weight", "contextcraft_tokens": 1154, "naive_tokens": 3464}
+{"timestamp": 1788016712.0049148, "turn": 127, "query": "What is my height", "contextcraft_tokens": 1023, "naive_tokens": 3484}
+{"timestamp": 1788016882.9906304, "turn": 129, "query": "You overtake the person in second place in a race. What position are you now in?", "contextcraft_tokens": 1026, "naive_tokens": 3515}
+{"timestamp": 1788016931.3329897, "turn": 131, "query": "A doctor gives you three pills and tells you to take one every 30 minutes. How long will the pills last?", "contextcraft_tokens": 890, "naive_tokens": 3554}
+{"timestamp": 1788016992.4617722, "turn": 133, "query": "What is my religion", "contextcraft_tokens": 572, "naive_tokens": 3569}
+{"timestamp": 1788017222.8723807, "turn": 135, "query": "If i go to comiccon, what character will I dress up as?", "contextcraft_tokens": 790, "naive_tokens": 3634}
+{"timestamp": 1788017258.4989734, "turn": 137, "query": "is spiderman my favorite programming language", "contextcraft_tokens": 642, "naive_tokens": 3654}
+{"timestamp": 1788017288.3950205, "turn": 139, "query": "What is my favorite car", "contextcraft_tokens": 731, "naive_tokens": 3671}
+{"timestamp": 1788017295.1618311, "turn": 141, "query": "What is my favorite color", "contextcraft_tokens": 532, "naive_tokens": 3688}
+{"timestamp": 1788017326.291318, "turn": 143, "query": "What color combination is likely to be my favorite", "contextcraft_tokens": 675, "naive_tokens": 3709}
+{"timestamp": 1788017340.4488041, "turn": 145, "query": "What color combination is likely to be my favorite since I like spiderman and fc barcelona", "contextcraft_tokens": 674, "naive_tokens": 3734}
+{"timestamp": 1788017355.9572308, "turn": 147, "query": "why would I be called a culer", "contextcraft_tokens": 1675, "naive_tokens": 3874}
+{"timestamp": 1788017373.5174956, "turn": 149, "query": "why would I be called a culer in spain", "contextcraft_tokens": 1038, "naive_tokens": 4067}
+{"timestamp": 1788017388.7570314, "turn": 151, "query": "why would I be called a culer in barcelona", "contextcraft_tokens": 1180, "naive_tokens": 4278}
+{"timestamp": 1788017410.8779185, "turn": 153, "query": "Why are barcelona fans called culers", "contextcraft_tokens": 1193, "naive_tokens": 4453}
+{"timestamp": 1788017456.542981, "turn": 155, "query": "Who is currently the best player of my favorite football team", "contextcraft_tokens": 1424, "naive_tokens": 4568}
+{"timestamp": 1788017611.986203, "turn": 157, "query": "Who is my favorite hero's arch nemesis", "contextcraft_tokens": 1035, "naive_tokens": 4630}
+{"timestamp": 1788017638.8141856, "turn": 159, "query": "How much money do I have in my account", "contextcraft_tokens": 761, "naive_tokens": 4667}
